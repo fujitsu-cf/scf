@@ -14,5 +14,10 @@ GIT_ROOT=${GIT_ROOT:-$(git rev-parse --show-toplevel)}
 
 unset IMAGE_PREFIX
 
-make -C "${GIT_ROOT}/src/uaa-fissile-release" \
-    kube-configs
+TARGET=kube-configs
+if [ "${1:-}" = "helm" ]; then
+    TARGET=helm-chart
+fi
+
+make -C "${GIT_ROOT}/src/uaa-fissile-release" ${TARGET}
+
