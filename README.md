@@ -315,6 +315,41 @@ You can access any URL or endpoint that references this address from your host.
 1. Make a change to component `X`, in its respective release (`X-release`).
 1. Run `make X-release compile images run` to build your changes and run them.
 
+#### Bumping a version in a release (or just make a change)
+
+For this example, lets suppose we want to update a release to a later tag.
+First of all checkout the desired commit:
+
+```
+host> cd src/loggregator/ && git checkout v81
+```
+
+Then from inside the vagrant box regenarate the image for this release:
+
+```
+vagrant> cd scf && make loggregator-release compile images kube run
+```
+
+Then let kubernetes know about this new image and use it:
+
+```
+vagrant> make kube
+```
+
+And restart the pods:
+
+```
+vagrant> make stop && make run
+```
+
+If everything works, then you probably need to update the .gitmodules to point
+to the new submodule commit SHA:
+
+```
+host> git add src/loggregator && git commit -am "Bumped the version of loggregator"
+host> git push origin develop # or whatever your remote and branch are called
+```
+
 ### How do I expose new settings via environment variables?
 
 1. Edit `./container-host-files/etc/scf/config/role-manifest.yml`:
