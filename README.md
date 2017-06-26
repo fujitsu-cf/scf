@@ -114,6 +114,27 @@ a working system.
 
 **Note:** If every role does not go green in `pod-status --watch` refer to [Troubleshooting](#troubleshooting)
 
+3. Pulling updates
+
+    When you want to pull the latest changes from the upstream you should:
+
+    ```
+    # Pull the changes (or checkout the commit you want):
+    git pull
+
+    # Update all submodules to match the checked out commit
+    git submodules update --recursive
+    ```
+
+    If there are untracked changes from submodule directories you can safely removed them.
+
+    Now you need to rebuild the images inside the vagrant box:
+
+    ```
+    make stop # And wait until all pods are stopped and removed
+    make vagrant-prep kube run
+    ```
+
 ## Usage
 
 The vagrant box is set up with default certs, passwords, ips, etc. to make it easier
