@@ -178,6 +178,29 @@ Typically Vagrant box deployments encounter one of few problems:
 
     uaa is not functioning, try steps above
 
+* volumes don't get mounted when suspending/resuming the box
+
+  For now only `vagrant stop` and then `vagrant up` fixes it.
+
+* When restarting the box with either `vagrant reload` or `vagrant stop/up` some
+  pods never come up automatically. You have to do a `make stop` and then
+  `make run` to bring this up.
+
+* Pulling images during any of `vagrant up` or `make vagrant-prep` or `make docker-deps`
+  fails.
+
+  Make sure you have enabled ipv4 ip fowarding.
+
+  Temporarily:
+
+  ```echo "1" | sudo tee /proc/sys/net/ipv4/ip_forward```
+
+  or permanently:
+
+  ```echo "net.ipv4.ip_forward = 1" | sudo tee /etc/sysctl.d/50-docker-ipv4-ipforward.conf```
+
+  and restart your docker service (or run `vagrant up` again)
+
 # Deploying SCF on Kubernetes
 
 After careful consideration of the difficulty of the current install, we decided not
