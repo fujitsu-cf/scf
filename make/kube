@@ -19,3 +19,16 @@ fissile build kube \
 
 # This is a small hack to make the output of make kube be compatible with K8s 1.6
 perl -p -i -e 's@extensions/v1beta1@batch/v1@' kube/bosh-task/*.yml
+
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/src/uaa-fissile-release/kube/bosh/mysql.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/consul.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/blobstore.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/etcd.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/diego-database.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/diego-cell.yml
+sed -i'' '/annotations:/{N;d;}' ${GIT_ROOT}/kube/bosh/mysql.yml
+
+
+sed -i'' 's/192.168.77.77/10.0.0.4/g'  ${GIT_ROOT}/kube/bosh/tcp-router.yml
+sed -i'' 's/192.168.77.77/10.0.0.4/g'  ${GIT_ROOT}/kube/bosh/diego-access.yml
+sed -i'' 's/192.168.77.77/10.0.0.4/g'  ${GIT_ROOT}/kube/bosh/router.yml

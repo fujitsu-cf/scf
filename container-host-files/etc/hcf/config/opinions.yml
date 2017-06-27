@@ -130,6 +130,8 @@ properties:
       rules:
       - destination: 0.0.0.0-9.255.255.255
         protocol: all
+      - destination: 10.0.0.0-10.255.255.255
+        protocol: all
       - destination: 11.0.0.0-169.253.255.255
         protocol: all
       - destination: 169.255.0.0-172.15.255.255

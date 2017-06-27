@@ -42,12 +42,12 @@ function retry_forever () {
 SKIP=$(if test "${SKIP_CERT_VERIFY_EXTERNAL}" = "true" ; then echo "--insecure" ; fi)
 
 status "Waiting for UAA to be available ..."
-retry_forever 10s curl --connect-timeout 5 --fail $SKIP "https://${KUBERNETES_NAMESPACE}.${UAA_HOST}:${UAA_PORT}/token_key"
+retry_forever 10s curl --connect-timeout 5 --fail $SKIP "https://${UAA_HOST}:${UAA_PORT}/token_key"
 
 status "Extract JWT public signing key"
 export JWT_SIGNING_PUB="$(\
     { curl --fail $(if test "${SKIP_CERT_VERIFY_EXTERNAL}" = "true" ; then echo "--insecure" ; fi)\
-        "https://${KUBERNETES_NAMESPACE}.${UAA_HOST}:${UAA_PORT}/token_key" \
+        "https://${UAA_HOST}:${UAA_PORT}/token_key" \
         || exit 1 \
     ; } \
     | awk 'BEGIN { RS="," ; FS="\"" } /value/ { if ($2 == "value") print $4 } ')"

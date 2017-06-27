@@ -55,6 +55,8 @@ echo -e "${pre_start_patch}" | patch --force
 
 touch "${SENTINEL}"
 
+rm -rf /var/vcap/store/consul_agent/*
+
 exit 0
 
 

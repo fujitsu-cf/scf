@@ -6,6 +6,7 @@ roles:
   - scripts/inverted_skip_ssl.sh
   scripts:
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -51,6 +52,7 @@ roles:
   - scripts/chown_vcap_store.sh
   - scripts/patches/fix_consul_server_name.sh
   - scripts/patches/fix_consul_pre_start.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -122,6 +124,7 @@ roles:
   - scripts/patches/fix_mysql_setup_syslog_forwarder.sh
   - scripts/forward_logfiles.sh
   - scripts/patches/enable_mysql_galera_bootstrap.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -195,6 +198,7 @@ roles:
   scripts:
   - scripts/patches/fix_mysqlproxy_setup_syslog_forwarder.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -252,6 +256,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -308,6 +313,7 @@ roles:
   scripts:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -362,6 +368,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -412,6 +419,7 @@ roles:
   scripts:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -462,6 +470,7 @@ roles:
   - scripts/forward_logfiles.sh
   - scripts/patches/use_routing_api_private_endpoint.sh
   - scripts/patches/cloud_controller_migration_transactional.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -514,6 +523,11 @@ roles:
       external: 9022
       internal: 9022
       public: false
+    - name: api-80
+      protocol: TCP
+      external: 80
+      internal: 9022
+      public: false
     - name: statsd
       protocol: TCP
       external: 8125
@@ -538,6 +552,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -569,6 +584,7 @@ roles:
   - scripts/chown_vcap_store.sh
   - scripts/forward_logfiles.sh
   - scripts/patches/fix_chown_blobstore_packages.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -618,6 +634,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -647,6 +664,7 @@ roles:
   - scripts/inverted_skip_ssl.sh
   scripts:
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -705,6 +723,7 @@ roles:
   - scripts/patches/fix_etcd_bootstrap.sh
   - scripts/patches/fix_etcd_cluster_hostnames.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -765,6 +784,7 @@ roles:
   scripts:
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -814,6 +834,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -854,6 +875,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -951,6 +973,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -984,6 +1007,7 @@ roles:
   - scripts/patches/fix_consul_pre_start.sh
   - scripts/authorize_internal_ca.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -1036,6 +1060,7 @@ roles:
   - scripts/configure-nested-net.sh
   - scripts/cleanup-garden-graph.sh
   - scripts/forward_logfiles.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf
@@ -1150,6 +1175,7 @@ roles:
   type: bosh-task
   scripts:
   - scripts/authorize_internal_ca.sh
+  - scripts/manage-hosts.sh
   jobs:
   - name: global-properties # needs to be first so images use it for processing monit templates
     release_name: hcf

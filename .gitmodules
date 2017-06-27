@@ -72,4 +72,4 @@
 	url = https://github.com/SUSE/testbrain.git
 [submodule "src/uaa-fissile-release"]
 	path = src/uaa-fissile-release
-	url = https://github.com/SUSE/uaa-fissile-release
+	url = https://github.com/fujitsu-cf/uaa-fissile-release

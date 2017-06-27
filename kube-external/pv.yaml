@@ -1,0 +1,100 @@
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0001
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv1
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0002
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv2
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0003
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv3
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0004
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv4
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0005
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv5
+
+
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0006
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv6
+
+
+
+
+---
+piVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv0007
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 10Gi
+  hostPath:
+    path: /home/azureuser/data/pv7
+
