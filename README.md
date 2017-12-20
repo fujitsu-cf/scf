@@ -34,6 +34,7 @@ Table of Contents
    * [SUSE Cloud Foundry](#suse-cloud-foundry)
    * [Disclaimer](#disclaimer)
    * [Table of Contents](#table-of-contents)
+   * [Deploying SCF on bare metal](installation/README.md)
    * [Deploying SCF on Vagrant](#deploying-scf-on-vagrant)
       * [Requirements](#requirements)
       * [Deploying](#deploying)
