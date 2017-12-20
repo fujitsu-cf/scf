@@ -176,7 +176,7 @@ Get info about your cluster
 ```
 $ kubectl get nodes
 NAME       STATUS    AGE       VERSION
-minikube   Ready     9m        v1.5.2
+minikube   Ready     9m        v1.8.1
 ```
 or
 
