@@ -243,6 +243,15 @@ Check the IP address of your machine. Setup IP address for host machine in follo
 
  * src/uaa-fissile-release/ kube-test/exposed-ports.yml
 
+### Install stampy
+
+```
+$ wget https://github.com/SUSE/stampy/releases/download/0.0.0/stampy-0.0.0.22.gbb93bf3.linux-amd64.tgz
+$ tar -xzvf stampy-0.0.0.22.gbb93bf3.linux-amd64.tgz
+$ chmod 755 stampy
+$ sudo cp stampy /usr/local/bin
+```
+
  
 ### Prepare the images:
 ```
