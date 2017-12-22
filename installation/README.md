@@ -216,3 +216,132 @@ Address 1: 10.0.0.1
 ```
 
 If you see that, DNS is working correctly.
+
+## Deploying SCF
+
+Clone the repository:
+
+```
+$ git clone https://github.com/fujitsu-cf/scf.git
+$ cd scf
+$ git checkout -b bare-metal origin/bare-metal
+$ git submodule sync --recursive
+$ git submodule update --init  --recursive
+
+```
+
+Check the IP address of your machine. Setup IP address for host machine in following files (replace the IP address 10.0.0.4 for yours):
+
+
+ * container-host-files/etc/hcf/config/scripts/manage-hosts.sh
+
+ * kube-external/api-external.yaml
+
+ * make/kube
+
+ * src/uaa-fissile-release/env/defaults.env
+
+ * src/uaa-fissile-release/ kube-test/exposed-ports.yml
+
+ 
+### Prepare the images:
+```
+$ source .envrc
+
+$ make vagrant-prep
+
+``` 
+
+Check if images are available:
+```
+$ docker images
+```
+
+### Start CF on k8s
+
+Make sure the DNS is working: https://kubernetes.io/docs/concepts/services-networking/dns-pod-service/
+
+
+
+Create Persistent Volumes for deployment 
+```
+$ kubectl create -f kube-external/pv.yaml
+```
+ 
+
+Create namespaces
+```
+$ kubectl create namespace uaa
+
+$ kubectl create namespace cf
+```
+ 
+
+Deploy uaa components
+
+ 
+```
+$ kubectl create -f ./src/uaa-fissile-release/kube/secrets/secret-1.yml -n uaa
+
+$ kubectl create -f ./src/uaa-fissile-release/kube/bosh/mysql.yml -n uaa
+```
+ 
+
+Wait until mysql is running and ready (READY 1/1):
+
+ 
+```
+$ kubectl get pods -n uaa
+
+ 
+
+NAME                   READY     STATUS    RESTARTS   AGE
+
+mysql-0                1/1       Running   0          1d
+
+ ```
+
+Then start uaa component:
+
+ 
+```
+$ kubectl create -f ./src/uaa-fissile-release/kube/bosh/uaa.yml -n uaa
+
+$ kubectl create -f ./src/uaa-fissile-release/kube-test/exposed-ports.yml -n uaa
+
+```
+
+ 
+
+Wait until uaa is running and ready (READY 1/1):
+
+ 
+```
+$ kubectl get pods -n uaa
+
+NAME                                    READY     STATUS    RESTARTS   AGE
+
+mysql-0                                  1/1          Running     0                   1d
+
+uaa-2401297320-hbfdf     1/1          Running     0                   1d
+```
+
+Install rest of CF components:
+
+ 
+```
+$ kubectl create --namespace="cf" --filename="kube/secrets"
+
+$ kubectl create --namespace="cf" --filename="kube/bosh-task/post-deployment-setup.yml"
+
+$ kubectl create --namespace="cf" --filename="kube/bosh"
+
+$ kubectl create -f kube-external/api-external.yaml -n cf
+```
+ 
+
+Now just wait if they are ready:
+```
+$ kubectl get pods -n cf
+```
+
