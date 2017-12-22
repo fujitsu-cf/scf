@@ -248,10 +248,15 @@ Check the IP address of your machine. Setup IP address for host machine in follo
 ```
 $ wget https://github.com/SUSE/stampy/releases/download/0.0.0/stampy-0.0.0.22.gbb93bf3.linux-amd64.tgz
 $ tar -xzvf stampy-0.0.0.22.gbb93bf3.linux-amd64.tgz
-$ chmod 755 stampy
 $ sudo cp stampy /usr/local/bin
 ```
+### Install fissile
 
+```
+$ wget https://cf-opensusefs2.s3.amazonaws.com/fissile/fissile-5.1.0%2B24.gf03f435.linux-amd64.tgz
+$ tar -xzvf fissile-5.1.0+24.gf03f435.linux-amd64.tgz
+$ sudo cp fissile /usr/local/bin
+```
  
 ### Prepare the images:
 ```
