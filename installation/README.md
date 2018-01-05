@@ -218,6 +218,13 @@ Address 1: 10.0.0.1
 If you see that, DNS is working correctly.
 
 ## Deploying SCF
+### Prerequisite
+Make sure you have installed `make`
+
+```
+$ sudo apt-get install build-essential
+```
+### Get repository
 
 Clone the repository:
 
@@ -238,8 +245,6 @@ Check the IP address of your machine. Setup IP address for host machine in follo
  * kube-external/api-external.yaml
 
  * make/kube
-
- * src/uaa-fissile-release/env/defaults.env
 
  * src/uaa-fissile-release/ kube-test/exposed-ports.yml
 
