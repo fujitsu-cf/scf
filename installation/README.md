@@ -269,6 +269,8 @@ $ source .envrc
 
 $ make vagrant-prep
 
+$ make kube
+
 ``` 
 
 Check if images are available:
