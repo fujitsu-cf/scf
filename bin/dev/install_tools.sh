@@ -14,7 +14,6 @@ thefissile="fissile-$(echo "${FISSILE_VERSION}" | sed -e 's/+/%2B/')"
 bin_dir="${bin_dir:-output/bin}"
 tools_dir="${tools_dir:-output/tools}"
 ubuntu_image="${ubuntu_image:-ubuntu:${UBUNTU_VERSION}}"
-fissile_url="${fissile_url:-${s3}/${thefissile}.linux-amd64.tgz}"
 cf_url="${cf_url:-https://cli.run.pivotal.io/stable?release=linux64-binary&version=${CFCLI_VERSION}&source=github-rel}"
 stampy_url="${stampy_url:-https://github.com/SUSE/stampy/releases/download/${STAMPY_MAJOR}/stampy-${STAMPY_VERSION}.linux-amd64.tgz}"
 kubectl_url="${kubectl_url:-https://storage.googleapis.com/kubernetes-release/release/v${KUBECTL_VERSION}/bin/linux/amd64/kubectl}"
@@ -29,9 +28,9 @@ bin_dir="$(cd "${bin_dir}" && pwd)"
 
 echo "Fetching cf CLI $cf_url ..."
 wget -q "$cf_url"        -O "${tools_dir}/cf.tgz"
-echo "Fetching fissile $fissile_url ..."
-wget -q "$fissile_url"   -O - | tar xz --to-stdout fissile > "${FISSILE_BINARY}"
-echo "Installed: $("${FISSILE_BINARY}" version)"
+echo "Fetching fissile  ..."
+cp bin/fissile ${bin_dir}
+echo "Installed"
 
 echo "Fetching stampy $stampy_url ..."
 wget -q "$stampy_url"   -O - | tar xz -C "${bin_dir}" stampy
@@ -48,7 +47,6 @@ echo "Fetching helm from ${helm_url} ..."
 wget -q "${helm_url}" -O - | tar xz -C "${bin_dir}" --strip-components=1 linux-amd64/helm
 
 echo "Making binaries executable ..."
-chmod a+x "${FISSILE_BINARY}"
 chmod a+x "${bin_dir}/stampy"
 chmod a+x "${bin_dir}/cf"
 chmod a+x "${bin_dir}/kubectl"
@@ -56,31 +54,5 @@ chmod a+x "${bin_dir}/k"
 chmod a+x "${bin_dir}/kk"
 chmod a+x "${bin_dir}/helm"
 
-echo "Installing certstrap ..."
-# We run chown in docker to avoid requiring sudo
-docker run --rm -v "${bin_dir}":/out:rw "golang:${GOLANG_VERSION}" /usr/bin/env GOBIN=/out go get github.com/square/certstrap
-docker run --rm -v "${bin_dir}":/out:rw "golang:${GOLANG_VERSION}" /bin/chown "$(id -u):$(id -g)" /out/certstrap
-
-echo "Pulling ruby bosh image ..."
-docker pull splatform/bosh-cli
-
-# Note that we might not have a k8s available; do this only if we're in vagrant
-if systemctl is-active kube-apiserver.service ; then
-  echo "Installing tiller for helm ..."
-  helm init
-else
-  echo "Skipping tiller installation for helm; no local kube found"
-fi
-
-echo "Installing helm-certgen ..."
-helm_certgen_dir="$(mktemp -d)"
-trap "rm -rf '${helm_certgen_dir}'" EXIT
-git clone --branch "${HELM_CERTGEN_VERSION}" --depth 1 https://github.com/SUSE/helm-certgen.git "${helm_certgen_dir}"
-docker run --rm -v "${bin_dir}":/out:rw -v "${helm_certgen_dir}:/go/src/github.com/SUSE/helm-certgen:ro" "golang:${GOLANG_VERSION}" /usr/bin/env GOBIN=/out go get github.com/SUSE/helm-certgen
-docker run --rm -v "${bin_dir}":/out:rw "golang:${GOLANG_VERSION}" /bin/chown "$(id -u):$(id -g)" /out/helm-certgen
-mkdir -p "${HOME}/.helm/plugins" # Necessary if we didn't run `helm init`
-rm -rf "${HOME}/.helm/plugins/certgen"
-mv --no-target-directory "${helm_certgen_dir}/plugin" "${HOME}/.helm/plugins/certgen"
-rm -rf "${helm_certgen_dir}"
 
 echo "Done."
